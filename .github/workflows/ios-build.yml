@@ -1,55 +1,49 @@
-name: Build iOS IPA
+name: Build iOS
 
 on:
   workflow_dispatch:
 
 jobs:
-  build-ios:
+  build:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install Flet
+      - name: Install Python packages
         run: |
           python -m pip install --upgrade pip
-          pip install flet>=0.28.3
+          pip install flet
 
-      - name: Verify project
-        run: |
-          python -m py_compile main.py
-
-      - name: Install Flutter
-        uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.41.7"
-      
-      - name: Verify Flutter
+          channel: stable
+
+      - name: Flutter Doctor
         run: flutter doctor
 
-      - name: Build iOS app
-        run: |
-          flet build ipa --no-codesign
-      
-      - name: Show build output
-        run: |
-          find build -maxdepth 5
+      - name: Check project
+        run: python -m py_compile main.py
 
-      - name: Create unsigned IPA
+      - name: Build iOS
         run: |
-          mkdir Payload
-          cp -R build/ipa/*.app Payload/
-          cd .
-          zip -r StatTracker-unsigned.ipa Payload
-      
-      - name: Upload unsigned IPA
+          flet build ipa --verbose
+
+      - name: Show build output
+        if: always()
+        run: |
+          pwd
+          find . -name "*.app"
+          find . -name "*.xcarchive"
+          find . -name "*.ipa"
+
+      - name: Upload build folder
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: StatTracker-unsigned
-          path: StatTracker-unsigned.ipa
+          name: build-output
+          path: build

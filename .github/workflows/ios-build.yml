@@ -54,10 +54,8 @@ jobs:
       
           mkdir Payload
           cp -R "$APP" Payload/
-      
-          cd Payload
-          zip -qry ../Stat-Tracker-for-IT-Council-unsigned.ipa .
-          cd ..
+          
+          zip -qry Stat-Tracker-for-IT-Council-unsigned.ipa Payload
       
       - name: Verify IPA
         run: |

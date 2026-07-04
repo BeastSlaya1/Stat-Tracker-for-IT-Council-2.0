@@ -46,9 +46,14 @@ jobs:
           ls -R build
           find build -type f
       
-      - name: Upload IPA folder
+      - name: Create unsigned IPA
+        run: |
+          mkdir Payload
+          cp -R build/ipa/stat-tracker-for-it-council.xcarchive/Products/Applications/stat-tracker-for-it-council.app Payload/
+          zip -qry StatTracker-unsigned.ipa Payload
+      
+      - name: Upload unsigned IPA
         uses: actions/upload-artifact@v4
         with:
-          name: Stat-Tracker-for-IT-Council-iOS
-          path: build/ipa
-          if-no-files-found: error
+          name: StatTracker-unsigned
+          path: StatTracker-unsigned.ipa

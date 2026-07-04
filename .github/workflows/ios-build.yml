@@ -25,9 +25,17 @@ jobs:
         run: |
           python -m py_compile main.py
 
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.41.7"
+      
+      - name: Verify Flutter
+        run: flutter doctor
+      
       - name: Build iOS app
         run: |
-          flet build ipa --verbose
+          flet build ipa --verbose --yes
 
       - name: Upload IPA
         uses: actions/upload-artifact@v4

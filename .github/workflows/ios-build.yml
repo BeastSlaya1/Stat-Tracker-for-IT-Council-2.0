@@ -32,14 +32,11 @@ jobs:
       
       - name: Verify Flutter
         run: flutter doctor
-      
-      - name: Build iOS app
-        run: |
-          flet build ipa --verbose --yes
 
       - name: Build iOS app
         run: |
           flet build ipa --no-codesign
+      
       - name: Show build output
         run: |
           find build -maxdepth 5

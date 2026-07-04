@@ -39,7 +39,10 @@ jobs:
 
       - name: Build iOS app
         run: |
-          flet build ipa --no-codesign
+          flet build ipa --no-codesign]
+      - name: Show build output
+        run: |
+          find build -maxdepth 5
 
       - name: Create unsigned IPA
         run: |

@@ -31,7 +31,7 @@ jobs:
 
       - name: Build iOS
         run: |
-          flet build ipa --verbose
+          yes | flet build ipa --verbose
 
       - name: Show build output
         if: always()

@@ -48,12 +48,24 @@ jobs:
       
       - name: Create unsigned IPA
         run: |
+          APP=$(find build/ipa -name "*.app" | head -n 1)
+      
+          echo "Found app: $APP"
+      
           mkdir Payload
-          cp -R build/ipa/stat-tracker-for-it-council.xcarchive/Products/Applications/stat-tracker-for-it-council.app Payload/
-          zip -qry StatTracker-unsigned.ipa Payload
+          cp -R "$APP" Payload/
+      
+          cd Payload
+          zip -qry ../Stat-Tracker-for-IT-Council-unsigned.ipa .
+          cd ..
+      
+      - name: Verify IPA
+        run: |
+          ls -lh
+          unzip -l Stat-Tracker-for-IT-Council-unsigned.ipa | head -20
       
       - name: Upload unsigned IPA
         uses: actions/upload-artifact@v4
         with:
-          name: StatTracker-unsigned
-          path: StatTracker-unsigned.ipa
+          name: Stat-Tracker-for-IT-Council-unsigned
+          path: Stat-Tracker-for-IT-Council-unsigned.ipa

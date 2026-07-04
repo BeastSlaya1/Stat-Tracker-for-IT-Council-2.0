@@ -1,0 +1,17 @@
+[project]
+name = "stat-tracker-for-it-council"
+version = "1.0.0"
+description = "Football match statistics tracker"
+requires-python = ">=3.11"
+
+dependencies = [
+    "flet>=0.28.3"
+]
+
+[tool.flet]
+org = "com.itcouncil"
+product = "Stat Tracker for IT Council"
+company = "IT Council"
+
+[tool.flet.app]
+path = "."

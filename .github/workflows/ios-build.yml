@@ -41,9 +41,14 @@ jobs:
           find . -name "*.xcarchive"
           find . -name "*.ipa"
 
-      - name: Upload build folder
-        if: always()
+      - name: List build output
+        run: |
+          ls -R build
+          find build -type f
+      
+      - name: Upload IPA folder
         uses: actions/upload-artifact@v4
         with:
-          name: build-output
-          path: build
+          name: Stat-Tracker-for-IT-Council-iOS
+          path: build/ipa
+          if-no-files-found: error

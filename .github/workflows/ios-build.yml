@@ -48,7 +48,7 @@ jobs:
       
       - name: Create unsigned IPA
         run: |
-          APP=$(find build/ipa -name "*.ipa" | head -n 1)
+          APP=$(find build/ipa -name "*.app" | head -n 1)
       
           echo "Found app: $APP"
       
